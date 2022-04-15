@@ -17,10 +17,15 @@
 body{
     background-color:#000;
     font-family: 'Roboto', 'consolas', monospace;
+    display: flex;
+    justify-content:center;
+    align-items: center;
 }
 main{
     width: 100vw;
-    min-height: 100vh;
+    min-height: auto;
+    padding-bottom:20px ;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -57,6 +62,22 @@ main{
 
     font-size: xx-large;
 }
+.calculation{
+    display: flex;
+}
+.calculation input{
+    width: 300px;
+    border: none;
+    padding: 5px;
+    background-color: transparent;
+    color: var(--calc-expression-color);
+    font-size: 15pt;
+    outline: none;
+
+}
+.aftermath{
+    max-width:300px
+}
 
 .calc_keyboard{
     display: grid;
@@ -66,6 +87,8 @@ main{
 .keyboard_key{
     width: 60px;
     height: 60px;
+    border: none;
+    background-color:transparent;
     border-radius: 50%;
     box-shadow: 0px 0px 5px var(--calc-expression-color);
     
@@ -74,6 +97,7 @@ main{
     align-items: center;
 
     font-size: x-large;
+    color: inherit;
     cursor: pointer;
 }
 .keyboard_key:hover{
@@ -84,9 +108,19 @@ main{
     transform: scale(0.9);
 }
 
+#models{
+    display: none;
+}
+
 @media (min-width:425px) {
     main{
         width: 425px;
-        margin: 0 auto;
+    }
+    .keyboard_key{
+        width: 75px;
+        height: 75px;
+    }
+    .calculation input{
+        width: 400px;
     }
 }
