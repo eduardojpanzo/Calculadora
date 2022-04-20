@@ -23,10 +23,10 @@ const keys = [
     {type:'number',view:'0',value:'0'},
     {type:'number',view:'00',value:'00'},
     {type:'signal',view:'◦',value:'.'},
-    {type:'operator',view:'=',value:'='},
+    {type:'function',view:'=',value:showResult},
 ]
 
-let lastNum,lastNumString = '', currentNum, result, operatorAtived= false;
+let lastNum,lastNumString = '', currentNum,currentNumString, result, operatorAtived= false;
 
 keys.map((key,index)=>{
     const keyItem = model_key.cloneNode(true);
@@ -36,20 +36,14 @@ keys.map((key,index)=>{
     keyItem.innerHTML = key.view;
 
     keyItem.addEventListener('click',(e)=>{
-        if (key.type === 'number' || key.type === 'signal') {
-            lastNumString += key.value;
-            lastNum = Number(lastNumString);
-        }
-        if (key.type === 'operator') {
-            operatorAtived?makeMath(key.value):firstOperator();        }
         calculationInput.value += keyItem.value;
 
-
+        //showResult();
     });
     calc_keyboard.append(keyItem);
 })
 
-function makeMath(op) {
+/* function makeMath(op) {
     switch (op) {
         case '+':
             result += lastNum;
@@ -67,19 +61,16 @@ function makeMath(op) {
             result /= lastNum;
             lastNumString = '';
             break;
-        case '=':
-            showResult()
         default:
             console.log('Ending');
             break;
     }
-}
+} */
 
 function firstOperator() {
+    lastNum = currentNum;
     result = lastNum;
     operatorAtived = true;
-    lastNumString = ''
-
 }
 
 function showResult() {
