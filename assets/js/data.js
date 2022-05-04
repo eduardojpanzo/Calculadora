@@ -4,8 +4,8 @@ const calculationInput = document.querySelector('.calculation input');
 const aftermath = document.querySelector('.aftermath');
 
 const keys = [
-    {type:'function',view:'C',value:'clear()'},
-    {type:'function',view:'DEL',value:'deleteExp()'},
+    {type:'function',view:'C',value:clear},
+    {type:'function',view:'DEL',value:'delete()'},
     {type:'operator',view:'%',value:'%'},
     {type:'operator',view:'➗',value:'/'},
     {type:'number',view:'7',value:'7'},
@@ -23,58 +23,147 @@ const keys = [
     {type:'number',view:'0',value:'0'},
     {type:'number',view:'00',value:'00'},
     {type:'signal',view:'◦',value:'.'},
-    {type:'function',view:'=',value:showResult},
+    {type:'function',view:'=',value:getResolution},
 ]
+//Strings
+let numberString = '',operatorAtived;
 
-let lastNum,lastNumString = '', currentNum,currentNumString, result, operatorAtived= false;
+//Number
+let realtyNum,result,timeMath=0;
 
-keys.map((key,index)=>{
+keys.forEach((key,index)=>{
     const keyItem = model_key.cloneNode(true);
 
-    keyItem.setAttribute('data-type',key.type);
-    keyItem.value = key.value;
-    keyItem.innerHTML = key.view;
+    mountKeyboard(keyItem,key)
 
     keyItem.addEventListener('click',(e)=>{
-        calculationInput.value += keyItem.value;
+        if (isNumberOrSignal(key)) {
+            numberString += keyItem.value;
+            calculationInput.value += keyItem.value;
+        }
 
-        //showResult();
+        if(isOperator(key)){
+            calculationInput.value += keyItem.value;
+            if (isfirstOperator()) {
+                result = Number(numberString);
+                numberString = '';
+                timeMath++;
+                
+                operatorAtived = key.value;
+            }
+            else {
+
+                if (isWrongExpression()) {
+                    aftermath.innerHTML = `= WrongExpression`;
+                    defaultValue();
+                } else {
+                    realtyNum = Number(numberString)
+                    numberString = '';
+                    
+                    makeMath(operatorAtived)
+                    
+                    operatorAtived = key.value;
+                }
+            }
+           
+        }
+
+        if(isFunction(key)){
+            key.value();
+        }
     });
+
     calc_keyboard.append(keyItem);
 })
 
-/* function makeMath(op) {
+function mountKeyboard(keyItem,key) {
+    keyItem.setAttribute('data-type',key.type);
+    keyItem.value = key.value;
+    keyItem.innerHTML = key.view;
+}
+
+function makeMath(op) {
     switch (op) {
         case '+':
-            result += lastNum;
-            lastNumString = '';
+            result = result + realtyNum;
             break;
         case '-':
-            result -= lastNum;
-            lastNumString = '';
+            result = result - realtyNum;
             break;
         case '*':
-            result *= lastNum;
-            lastNumString = '';
+            result = result * realtyNum;
             break;
         case '/':
-            result /= lastNum;
-            lastNumString = '';
+            result = result / realtyNum;
             break;
         default:
             console.log('Ending');
             break;
     }
-} */
 
-function firstOperator() {
-    lastNum = currentNum;
-    result = lastNum;
-    operatorAtived = true;
-}
-
-function showResult() {
     aftermath.innerHTML = `= ${result}`
 }
 
+function getResolution() {
+   if (!isfirstOperator()) {
+       if (isWrongExpression()) {
+           aftermath.innerHTML = `= WrongExpression`;
+           defaultValue();
+           return
+       } else {
+           realtyNum = Number(numberString)
+           makeMath(operatorAtived)
+       }
+       
+   } else {
+       result = Number(numberString);
+       aftermath.innerHTML = `= ${result}`;
+   }
+
+   numberString = `${result}`;
+   timeMath = 0;
+} 
+
+function isfirstOperator() {
+    return timeMath === 0;
+}
+
+
+function isWrongExpression() {
+    const inputText = calculationInput.value
+    const lastExpretion = inputText.substr(inputText.length -1)
+    
+    return lastExpretion === operatorAtived
+}
+
+function defaultValue(){
+    calculationInput.value = '';
+    numberString = '';
+    timeMath = 0;
+}
+
+function isNumberOrSignal({type}) {
+    return type === 'number' || type === 'signal';
+}
+
+function isOperator({type}){
+    return type === 'operator'
+}
+
+function isFunction({type}) {
+    return type === 'function'
+}
+
+function clear() {
+    defaultValue();
+    aftermath.innerHTML = ``;
+}
+
+function deleteExpression() {
+    
+}
 //Melhor o calculo no fim da digitalização do segundo número em diante... :)
+
+//criar um var que concatena todos os digitos e se no fim dela tiver um operação deve exibir um erro
+
+//fazer a função de deletar
