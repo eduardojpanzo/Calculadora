@@ -5,7 +5,7 @@ const aftermath = document.querySelector('.aftermath');
 
 const keys = [
     {type:'function',view:'C',value:clear},
-    {type:'function',view:'DEL',value:'delete()'},
+    {type:'function',view:'DEL',value:backspace},
     {type:'operator',view:'%',value:'%'},
     {type:'operator',view:'➗',value:'/'},
     {type:'number',view:'7',value:'7'},
@@ -128,12 +128,21 @@ function isfirstOperator() {
     return timeMath === 0;
 }
 
+function backspace() {
+    getLastExpression(calculationInput.value);
+    console.log();
+}
+
 
 function isWrongExpression() {
-    const inputText = calculationInput.value
-    const lastExpretion = inputText.substr(inputText.length -1)
+    const lastExpretion 
+        = getLastExpression(calculationInput.value);
     
     return lastExpretion === operatorAtived
+}
+
+function getLastExpression(content) {
+    return content.substr(content.length -1)
 }
 
 function defaultValue(){
@@ -157,10 +166,6 @@ function isFunction({type}) {
 function clear() {
     defaultValue();
     aftermath.innerHTML = ``;
-}
-
-function deleteExpression() {
-    
 }
 //Melhor o calculo no fim da digitalização do segundo número em diante... :)
 
