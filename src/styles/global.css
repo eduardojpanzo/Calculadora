@@ -9,26 +9,32 @@
   --text-primary: #22252d;
   --text-secondary: #262933;
 
-  --bg-primary: #c4c4cc;
-  --bg-secondary: #efeaf0;
-  --bg-third: #fff;
+  --bg: #c0c0c0;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f4f3f4;
+  --bg-third: #f7f7f7;
+
+  --transparent: rgba(0, 0, 0, 0.2);
 
   --red: #eb6666;
   --green: #26fed7;
 }
 
-.darkMode :root {
+.darkMode:root {
   --text-primary: #fff;
   --text-secondary: #c4c4cc;
 
+  --bg: #323232;
   --bg-primary: #22252d;
   --bg-secondary: #292d36;
   --bg-third: #262933;
+
+  --transparent: rgba(0, 0, 0, 0.2);
 
   --red: #eb6666;
   --green: #26fed7;
 }
 
 body {
-  background: var(--bg-third);
+  background: var(--bg);
 }

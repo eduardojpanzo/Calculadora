@@ -11,6 +11,7 @@
   min-height: 640px;
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--bg-primary);
   border-radius: 1.5rem;
   overflow: hidden;
 }
@@ -63,15 +64,12 @@
   border-radius: 50px;
   background-color: var(--bg-secondary);
 }
-.themeSwitch .light svg {
+.themeSwitch svg {
+  fill: #a8a8a81a;
   width: 18px;
 }
-.themeSwitch .dark svg {
-  width: 18px;
-}
-
-.themeSwitch svg path {
-  background: var(--bg-secondary);
+.themeSwitch .active svg {
+  fill: var(--text-primary);
 }
 
 .keys {
@@ -82,7 +80,7 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
   gap: 1rem;
-  box-shadow: 0px -2px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px -2px 16px var(--transparent);
 }
 
 .keys .key {
@@ -110,7 +108,7 @@
 }
 
 .keys .key:hover {
-  box-shadow: inset 0px 0px 8px rgba(0, 0, 0, 0.2);
+  filter: brightness(1.2);
 }
 
 .keys .key.action span {
